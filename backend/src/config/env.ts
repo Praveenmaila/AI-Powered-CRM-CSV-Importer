@@ -1,8 +1,8 @@
 import { z } from "zod";
 import dotenv from "dotenv";
 
-// Load .env file before validation
-dotenv.config();
+// Load .env file before validation (override to support tsx watch hot reload)
+dotenv.config({ override: true });
 
 // ═══════════════════════════════════════════════
 // Environment Variable Schema
@@ -21,7 +21,7 @@ const envSchema = z.object({
 
   GEMINI_MODEL: z
     .string()
-    .default("gemini-2.0-flash"),
+    .default("gemini-2.5-flash"),
 
   CORS_ORIGIN: z
     .string()
