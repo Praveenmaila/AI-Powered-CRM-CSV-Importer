@@ -27,33 +27,33 @@ An enterprise-grade, stateless intelligent CSV importing pipeline that allows us
 
 ```mermaid
 flowchart TB
-    subgraph Frontend ["Frontend (Next.js 16 + Tailwind v4 + shadcn/ui)"]
-        UI[3-Step Import Wizard]
-        Dropzone[CSV Dropzone Component]
-        Preview[TanStack Table Preview]
-        Results[Animated Results & Exporter]
+    subgraph Frontend["Frontend (Next.js 16 + Tailwind v4 + shadcn/ui)"]
+        UI["3-Step Import Wizard"]
+        Dropzone["CSV Dropzone Component"]
+        Preview["TanStack Table Preview"]
+        Results["Animated Results & Exporter"]
     end
 
-    subgraph Backend ["Backend API (Express + TypeScript + Node.js)"]
-        UploadMW[Multer Memory Storage<br>10MB Limit]
-        ParserService[Stream CSV Parser<br>BOM Clean + Parse]
-        BatchService[Batch Chunker<br>25 Rows/Batch]
-        GeminiService[Gemini AI Engine<br>Structured JSON Mode]
-        MapperService[Result Aggregator & Stats]
+    subgraph Backend["Backend API (Express + TypeScript + Node.js)"]
+        UploadMW["Multer Memory Storage<br/>10MB Limit"]
+        ParserService["Stream CSV Parser<br/>BOM Clean + Parse"]
+        BatchService["Batch Chunker<br/>25 Rows/Batch"]
+        GeminiService["Gemini AI Engine<br/>Structured JSON Mode"]
+        MapperService["Result Aggregator & Stats"]
     end
 
-    subgraph External ["External AI"]
-        GeminiAPI["Google Gemini API<br>(gemini-2.5-flash)"]
+    subgraph External["External AI"]
+        GeminiAPI["Google Gemini API<br/>(gemini-2.5-flash)"]
     end
 
-    Dropzone -->|Client-Side Parse| Preview
-    Preview -->|POST /api/import (FormData)| UploadMW
+    Dropzone -->|"Client-Side Parse"| Preview
+    Preview -->|"POST API Import"| UploadMW
     UploadMW --> ParserService
     ParserService --> BatchService
-    BatchService -->|Concurrent/Sequential Batches| GeminiService
-    GeminiService <-->|JSON Prompt / Response| GeminiAPI
+    BatchService -->|"Concurrent / Sequential Batches"| GeminiService
+    GeminiService <-->|"JSON Prompt / Response"| GeminiAPI
     GeminiService --> MapperService
-    MapperService -->|Standardized CRM JSON| Results
+    MapperService -->|"Standardized CRM JSON"| Results
 ```
 
 ---
